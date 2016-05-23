@@ -1,4 +1,11 @@
 <div class="container">
+    <div ng-show="error" class="alert alert-danger">
+        <strong>Error! </strong>{{error}}
+    </div>
+    <div ng-show="success" class="alert alert-success">
+        <strong>Success! </strong>{{success}}
+    </div>
+
     <div class="row">
         <h2>Enter an email to search user</h2>
 
@@ -14,10 +21,14 @@
             </div>
         </div>
     </div>
-    <div ng-show="result">
+    <div ng-show="result || resultNotFound">
         <h2>Result</h2>
 
-        <div class="list-group">
+        <div ng-show="resultNotFound" class="alert alert-info">
+            <strong>Info! </strong>{{resultNotFound}}
+        </div>
+
+        <div ng-show="result" class="list-group">
             <a href="#" class="list-group-item">{{result.email}}</a>
         </div>
     </div>

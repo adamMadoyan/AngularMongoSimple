@@ -12,28 +12,37 @@ Mongo.app.controllers.controller('main',
             $scope.user = {
                 email: "admin@mail.ru"
             };
+            $scope.error = "";
 
             $scope.users = [];
 
             $scope.save = function () {
                 console.info("save");
-                MainService.save($scope.user, function (data) {
-                    console.info(data);
+                $scope.resultNotFound = "";
+                MainService.save($scope.user, function (response) {
+                    console.info(response);
                     if (response.status == 200) {
                         $scope.result = response.data;
+                        $scope.error = "";
+                        $scope.success = "Your request completed successfully.";
                     } else if (response.status == 409) {
-                        $scope.error = "User already exist";
+                        $scope.error = "User already exist.";
+                        $scope.success = "";
                     }
                 });
             };
 
             $scope.search = function () {
+                $scope.error = "";
+                $scope.success = "";
                 console.info("search");
                 MainService.getByEmail($scope.user.email, function (response) {
                     if (response.status == 200) {
                         $scope.result = response.data;
+                        $scope.resultNotFound = "";
                     } else if (response.status == 404) {
                         $scope.result = null;
+                        $scope.resultNotFound = "By this email there is no data!";
                     }
                 });
             }
